@@ -1,0 +1,27 @@
+# ──────────────────────────────────────────────────────────────────
+#  Argo CD Application
+#  !! Replace GITHUB_USER with your GitHub username !!
+# ──────────────────────────────────────────────────────────────────
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wil-playground
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/MohamedMQ/inception-of-things
+    targetRevision: HEAD
+    path: p3/manifests
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
